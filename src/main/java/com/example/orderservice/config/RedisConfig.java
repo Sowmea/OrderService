@@ -1,4 +1,4 @@
-package com.microservice.orderservice.config;
+package com.example.orderservice.config;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;

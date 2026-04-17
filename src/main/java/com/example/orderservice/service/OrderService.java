@@ -1,17 +1,22 @@
 package com.example.orderservice.service;
 
-import com.example.orderservice.dto.CreateOrderRequest;
-import com.example.orderservice.dto.OrderResponse;
-import com.example.orderservice.dto.PagedOrderResponse;
-import com.example.orderservice.dto.UpdateOrderStatusRequest;
+import com.example.orderservice.client.InventoryServiceClient;
+import com.example.orderservice.client.ProductServiceClient;
+import com.example.orderservice.config.RedisConfig;
+import com.example.orderservice.dto.*;
 import com.example.orderservice.enums.OrderStatus;
+import com.example.orderservice.exception.*;
+import com.example.orderservice.model.Order;
 import com.example.orderservice.model.ShippingAddress;
 import com.example.orderservice.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.Page;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
