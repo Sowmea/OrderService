@@ -1,5 +1,9 @@
 package com.example.orderservice.controller;
 
+import com.example.orderservice.dto.CreateOrderRequest;
+import com.example.orderservice.dto.OrderResponse;
+import com.example.orderservice.dto.PagedOrderResponse;
+import com.example.orderservice.dto.UpdateOrderStatusRequest;
 import com.example.orderservice.enums.OrderStatus;
 import com.example.orderservice.service.OrderService;
 import jakarta.validation.Valid;
