@@ -15,10 +15,6 @@ import java.util.stream.Collectors;
 // ═══════════════════════════════════════════════════════════════════════════════
 // REQUEST  DTOs
 // ═══════════════════════════════════════════════════════════════════════════════
-
-class _Requests {
-}  // marker – grouping only
-
 @Getter
 @Setter
 @NoArgsConstructor
