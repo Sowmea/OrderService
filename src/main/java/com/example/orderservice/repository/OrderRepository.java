@@ -2,14 +2,15 @@ package com.example.orderservice.repository;
 
 
 import com.example.orderservice.model.Order;
+import com.example.orderservice.enums.OrderStatus;
 import feign.Param;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -27,15 +28,15 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Page<Order> findByCustomerId(Long customerId, Pageable pageable);
 
-    Page<Order> findByCustomerIdAndStatus(Long customerId, com.example.orderservice.enums.OrderStatus status, Pageable pageable);
+    Page<Order> findByCustomerIdAndStatus(Long customerId, OrderStatus status, Pageable pageable);
 
     List<Order> findByCustomerEmail(String email);
 
-    // ─── Status queries ───────────────────────────────────────────────────────
+    // ─── Status queries ───────────────────────────────────────────────────
 
-    Page<Order> findByStatus(com.example.orderservice.enums.OrderStatus status, Pageable pageable);
+    Page<Order> findByStatus(OrderStatus status, Pageable pageable);
 
-    long countByStatus(com.example.orderservice.enums.OrderStatus status);
+    long countByStatus(OrderStatus status);
 
     // ─── Date-range queries ───────────────────────────────────────────────────
 
@@ -69,8 +70,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
               AND o.createdAt < :before
             """)
     int bulkUpdateStatus(
-            @Param("currentStatus") com.example.orderservice.enums.OrderStatus currentStatus,
-            @Param("newStatus") com.example.orderservice.enums.OrderStatus newStatus,
+            @Param("currentStatus") OrderStatus currentStatus,
+            @Param("newStatus") OrderStatus newStatus,
             @Param("before") LocalDateTime before
     );
 

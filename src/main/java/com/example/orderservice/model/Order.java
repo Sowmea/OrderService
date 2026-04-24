@@ -19,12 +19,12 @@ import java.util.UUID;
  */
 @Entity
 @Table(
-        name = "orders",
-        indexes = {
-                @Index(name = "idx_order_customer_id", columns = "customer_id"),
-                @Index(name = "idx_order_status", columns = "status"),
-                @Index(name = "idx_order_reference", columns = "order_reference", unique = true)
-        }
+	name = "orders",
+	indexes = {
+		@Index(name = "idx_order_customer_id", columnList = "customer_id"),
+		@Index(name = "idx_order_status", columnList = "status"),
+		@Index(name = "idx_order_reference", columnList = "order_reference", unique = true)
+	}
 )
 @Getter
 @Setter

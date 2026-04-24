@@ -8,11 +8,11 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(
-        name = "order_items",
-        indexes = {
-                @Index(name = "idx_order_item_order_id", columns = "order_id"),
-                @Index(name = "idx_order_item_product_id", columns = "product_id")
-        }
+	name = "order_items",
+	indexes = {
+		@Index(name = "idx_order_item_order_id", columnList = "order_id"),
+		@Index(name = "idx_order_item_product_id", columnList = "product_id")
+	}
 )
 @Getter
 @Setter

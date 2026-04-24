@@ -7,17 +7,19 @@ import com.example.orderservice.dto.*;
 import com.example.orderservice.enums.OrderStatus;
 import com.example.orderservice.exception.*;
 import com.example.orderservice.model.Order;
+import com.example.orderservice.model.OrderItem;
 import com.example.orderservice.model.ShippingAddress;
 import com.example.orderservice.repository.OrderRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -70,7 +72,7 @@ public class OrderService {
 
         // ── 1. Fetch product details ────────────────────────────────────────
         List<Long> productIds = request.getItems().stream()
-                .map(CreateOrderRequest.OrderItemRequest::getProductId)
+                .map(OrderItemRequest::getProductId)
                 .collect(Collectors.toList());
 
         Map<Long, ProductResponse> productMap = fetchProductMap(productIds);
@@ -304,7 +306,7 @@ public class OrderService {
         }
     }
 
-    private void validateProducts(List<CreateOrderRequest.OrderItemRequest> items,
+    private void validateProducts(List<OrderItemRequest> items,
                                   Map<Long, ProductResponse> productMap) {
         for (var item : items) {
             ProductResponse product = productMap.get(item.getProductId());
@@ -315,7 +317,7 @@ public class OrderService {
     }
 
     private List<InventoryCheckResponse> checkInventoryBatch(
-            List<CreateOrderRequest.OrderItemRequest> items) {
+            List<OrderItemRequest> items) {
         List<InventoryCheckRequest> requests = items.stream()
                 .map(i -> new InventoryCheckRequest(i.getProductId(), i.getQuantity()))
                 .collect(Collectors.toList());
@@ -328,7 +330,7 @@ public class OrderService {
         }
     }
 
-    private void validateStock(List<CreateOrderRequest.OrderItemRequest> items,
+    private void validateStock(List<OrderItemRequest> items,
                                Map<Long, InventoryCheckResponse> stockMap) {
         for (var item : items) {
             InventoryCheckResponse stock = stockMap.get(item.getProductId());
@@ -398,7 +400,7 @@ public class OrderService {
         return order;
     }
 
-    private ShippingAddress mapShippingAddress(CreateOrderRequest.ShippingAddressRequest req) {
+    private ShippingAddress mapShippingAddress(ShippingAddressRequest req) {
         if (req == null) return null;
         return ShippingAddress.builder()
                 .street(req.getStreet()).city(req.getCity())
@@ -509,3 +511,4 @@ public class OrderService {
             log.warn("Failed to evict cache for reference {}: {}", reference, ex.getMessage());
         }
     }
+}
