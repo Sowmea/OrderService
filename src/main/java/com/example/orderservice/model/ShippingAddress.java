@@ -22,7 +22,7 @@ public class ShippingAddress implements Serializable {
     @Column(name = "shipping_city",        length = 100)
     private String city;
 
-    @Column(name = "shipping_state",       length = 100)
+    @Column(name = "shipping_state",       length = 10)
     private String state;
 
     @Column(name = "shipping_postal_code", length = 20)

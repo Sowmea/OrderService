@@ -95,7 +95,7 @@ public class OrderController {
             @PathVariable Long customerId,
             @RequestParam(required = false) OrderStatus status,
             @RequestParam(defaultValue = "0")  int page,
-            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "createdAt,desc") String[] sort) {
 
         Pageable pageable = buildPageable(page, size, sort);
